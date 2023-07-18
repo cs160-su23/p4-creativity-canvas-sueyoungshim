@@ -2,7 +2,7 @@
 Feel free to delete any/all of it and replace with your own functionality. */
 
 var path;
-var currentColor = 'black'
+var currentColor = $('#palette').val();
 var currentWidth = 5
 
 tool.onMouseDown = function(event) { //This code in this function is called whenever the mouse is clicked.
@@ -16,18 +16,27 @@ tool.onMouseDrag = function(event) {
     path.add(event.point); //Add points to the path as the user drags their mouse.
 }
 
-$('#default').on('click', function (e) { //jquery click event code for our "pencil" button.
-    currentColor = 'black';  //change the color to black
+$('#pen').on('click', function (e) { //jquery click event code for our "pencil" button.
+    currentColor = $('#palette').val();
     currentWidth = 5;       //change the width to 5
 })
-$('#thick-green').on('click', function (e) { //jquery button click code for our "green paint" button.
-    console.log("green clicked");
-    currentColor = 'green';
+$('#pencil').on('click', function (e) { //jquery button click code for our "green paint" button.
+    console.log("pencil clicked");
+    currentColor = $('#palette').val();
+    currentWidth = 15;
+})
+$('#brush').on('click', function (e) { //jquery button click code for our "green paint" button.
+    console.log("brush clicked");
+    currentColor = $('#palette').val();
     currentWidth = 15;
 })
 $('#eraser').on('click', function (e) { //jquery button click code for our eraser button.
     currentColor = 'white';
     currentWidth = 20;
+})
+
+$('#palette').on('input', function (e) {
+    currentColor = $('#palette').val();
 })
 
 // $(window).on('resize', function() {
