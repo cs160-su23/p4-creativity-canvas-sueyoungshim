@@ -24,9 +24,9 @@
 
   </head>
 
-  <body>
+  <!-- <body> -->
     <!-- Our row of buttons -->
-    <button type="button" class="btn" id = "default" >
+    <!-- <button type="button" class="btn" id = "default" >
       <span class="material-symbols-outlined"> edit</span>
     </button>
 
@@ -36,12 +36,41 @@
 
     <button type="button" class="btn" id = "eraser" >
       <span class="material-symbols-outlined">circle</span>
-    </button>
+    </button> -->
 
-    <br> <!-- I used a simple line break here, but you might want to consider using a more sophisticated layout/formatting solution (e.g. Bootstrap rows and columns), especially if there's a lot of elements you want to cleanly organize, position, and format in your app. -->
+    <!-- <br> I used a simple line break here, but you might want to consider using a more sophisticated layout/formatting solution (e.g. Bootstrap rows and columns), especially if there's a lot of elements you want to cleanly organize, position, and format in your app. -->
 
-    <canvas id="my-canvas" width = "800" height = "600"></canvas> <!-- our Canvas object -->
+    <!-- <canvas id="my-canvas" width = "800" height = "600"></canvas> our Canvas object -->
 
+  <!-- </body> -->
+
+  <body>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+  
+      .fill-height {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+    <div class="container-fluid fill-height">
+      <div class="row" style="height: 100%;">
+        <div class="col-3" id="past-work" style="background-color: rgb(210, 209, 209);">
+
+        </div>
+        <div class="col-9" id="canvas" style="background-color: white;">
+          <canvas width="">
+
+          </canvas>
+        </div>
+      </div>
+    </div>
   </body>
 
 </html>
