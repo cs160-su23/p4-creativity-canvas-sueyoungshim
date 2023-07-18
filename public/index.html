@@ -24,26 +24,6 @@
 
   </head>
 
-  <!-- <body> -->
-    <!-- Our row of buttons -->
-    <!-- <button type="button" class="btn" id = "default" >
-      <span class="material-symbols-outlined"> edit</span>
-    </button>
-
-    <button type="button" class="btn btn-success" id = "thick-green" >
-      <span class="material-symbols-outlined">format_paint</span>
-    </button>
-
-    <button type="button" class="btn" id = "eraser" >
-      <span class="material-symbols-outlined">circle</span>
-    </button> -->
-
-    <!-- <br> I used a simple line break here, but you might want to consider using a more sophisticated layout/formatting solution (e.g. Bootstrap rows and columns), especially if there's a lot of elements you want to cleanly organize, position, and format in your app. -->
-
-    <!-- <canvas id="my-canvas" width = "800" height = "600"></canvas> our Canvas object -->
-
-  <!-- </body> -->
-
   <body>
     <style>
       html, body {
@@ -57,20 +37,89 @@
         margin: 0;
         padding: 0;
       }
+
+      #my-canvas {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        top: 0;
+      }
+
+      #canvas {
+        z-index: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+     
+      #palette {
+        z-index: 1;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 48px;
+        height: 48px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+      #palette::-webkit-color-swatch {
+        z-index: 1;
+        border-radius: 15px;
+        border: none;
+      }
+      #palette::-moz-color-swatch {
+        z-index: 1;
+        border-radius: 15px;
+        border: none;
+      }
+
+      button {
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        width: 48px;
+        height: 48px;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     </style>
 
     <div class="container-fluid fill-height">
       <div class="row" style="height: 100%;">
         <div class="col-3" id="past-work" style="background-color: rgb(210, 209, 209);">
-
+          <!-- put past work stuff here -->
         </div>
         <div class="col-9" id="canvas" style="background-color: white;">
-          <canvas width="">
-
-          </canvas>
+          <div class="tools" style="height: 48px;">
+            <input type="color" id="palette" value="#000000" style="top: 0;">
+            <button id="pen">
+              <img src="./icons/pen-96.png" />
+            </button>
+            <button id="pencil">
+              <img src="./icons/pencil-96.png"/>
+            </button>
+            <button id="brush">
+              <img src="./icons/brush-96.png"/>
+            </button>
+            <button id="eraser">
+              <img src="./icons/eraser-96.png" style="width: 80%; height: 80%"/>
+            </button>
+          </div>
+          <canvas id="my-canvas" width="2000" height="1000"></canvas>
         </div>
       </div>
     </div>
   </body>
 
 </html>
+
+<!-- 
+  sources
+  color palette: https://codingartistweb.com/2021/09/styling-input-type-color-pure-css-tutorial/
+
+-->

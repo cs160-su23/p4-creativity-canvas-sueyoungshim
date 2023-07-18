@@ -21,6 +21,7 @@ $('#default').on('click', function (e) { //jquery click event code for our "penc
     currentWidth = 5;       //change the width to 5
 })
 $('#thick-green').on('click', function (e) { //jquery button click code for our "green paint" button.
+    console.log("green clicked");
     currentColor = 'green';
     currentWidth = 15;
 })
@@ -28,3 +29,18 @@ $('#eraser').on('click', function (e) { //jquery button click code for our erase
     currentColor = 'white';
     currentWidth = 20;
 })
+
+// $(window).on('resize', function() {
+//     var canvas = $('#my-canvas')[0];
+//     var container = $('#canvas')[0];
+//     console.log(canvas);
+//     console.log(container);
+
+//     console.log($('#my-canvas').attr('width'));
+//     console.log($('#canvas').attr('width'));
+
+
+//     $('#my-canvas').attr('width', $('#canvas').attr('width'));
+//     $('#my-canvas').attr('height', $('#canvas').attr('height'));
+
+//   });
