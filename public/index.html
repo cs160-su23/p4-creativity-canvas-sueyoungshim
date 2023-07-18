@@ -17,87 +17,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <!--add the Google Material Symbols Font (from https://fonts.google.com/icons ) -->
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
   <!-- Link to our Paperscript file containing our custom drawing app code, and associate it with the "my-canvas" Canvas Object defined in the HTML layout below-->
   <script type="text/paperscript" src="js/my-drawing-app.js" canvas="my-canvas"></script>
-
+  <link rel="stylesheet" href="css/styles.css">
   </head>
 
   <body>
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-  
-      .fill-height {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      #my-canvas {
-        /* position: absolute; */
-        margin: 0;
-        padding: 0;
-        top: 0;
-        z-index: 1;
-      }
-
-      #canvas {
-        z-index: 1;
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
-     
-      #palette {
-        z-index: 1;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        width: 48px;
-        height: 48px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-      }
-      #palette::-webkit-color-swatch {
-        z-index: 1;
-        border-radius: 15px;
-        border: none;
-      }
-      #palette::-moz-color-swatch {
-        z-index: 1;
-        border-radius: 15px;
-        border: none;
-      }
-
-      button {
-        padding: 0;
-        border: none;
-        background-color: transparent;
-        width: 48px;
-        height: 48px;
-        z-index: 2;
-      }
-
-      button:hover {
-        background-color:black;
-        z-index: 2;
-      }
-
-      img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-
-      }
-    </style>
-
     <div class="container-fluid fill-height">
       <div class="row" style="height: 100%;">
         <div class="col-3" id="past-work" style="background-color: rgb(210, 209, 209);">
@@ -118,6 +45,7 @@
             <button id="eraser">
               <img src="./icons/eraser-96.png" style="width: 80%; height: 80%"/>
             </button>
+            <input type="range" id="thickness" min="1" max="30" step="0.5" value="15">
           </div>
           <canvas id="my-canvas" width="2000" height="1000"></canvas>
         </div>
@@ -130,5 +58,6 @@
 <!-- 
   sources
   color palette: https://codingartistweb.com/2021/09/styling-input-type-color-pure-css-tutorial/
+  thickness: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
 
 -->
