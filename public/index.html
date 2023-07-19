@@ -27,10 +27,15 @@
   <body>
     <div class="container-fluid fill-height">
       <div class="row" style="height: 100%;">
-        <div class="col-3" id="past-work" style="background-color: rgb(210, 209, 209);">
+        <div class="col-2" style="background-color: rgb(210, 209, 209);">
+          <div class="row" style="height: 5%; display: flex; justify-content: center; align-items: center;">
+            <button id="create-new" style="width: auto;"> Create New </button>
+          </div>
+          <div class="row" id="past-works" style="height: 95%;"></div>
+
           <!-- put past work stuff here -->
         </div>
-        <div class="col-9" id="canvas" style="background-color: white;">
+        <div class="col-10" id="canvas" style="background-color: white;">
           <div class="tools" style="height: 48px;">
             <input type="color" id="palette" value="#000000" style="top: 0;">
             <button id="pen">
@@ -45,7 +50,7 @@
             <button id="eraser">
               <img src="./icons/eraser-96.png" style="width: 80%; height: 80%"/>
             </button>
-            <input type="range" id="thickness" min="1" max="30" step="0.5" value="15">
+            <input type="range" id="thickness" min="1" max="30" step="0.5" value="15" oninput="">
           </div>
           <canvas id="my-canvas" width="2000" height="1000"></canvas>
         </div>
@@ -59,5 +64,7 @@
   sources
   color palette: https://codingartistweb.com/2021/09/styling-input-type-color-pure-css-tutorial/
   thickness: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
+  changing thumb size: https://stackoverflow.com/questions/29475024/style-webkit-slider-thumb-with-jquery
+  clear canvas: https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing
 
 -->
