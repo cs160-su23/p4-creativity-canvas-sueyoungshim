@@ -37,6 +37,8 @@ html, body {
 
 #my-canvas {
   /* position: absolute; */
+  width:100%;
+  object-fit: contain;
   margin: 0;
   padding: 0;
   top: 0;
@@ -45,6 +47,8 @@ html, body {
 
 #canvas {
   z-index: 1;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
   margin: 0;
   padding: 0;
   border: 0;

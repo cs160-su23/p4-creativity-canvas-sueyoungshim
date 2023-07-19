@@ -4,6 +4,7 @@ Feel free to delete any/all of it and replace with your own functionality. */
 var path;
 var currentColor = $('#palette').val();
 var strokes = [];
+var prevTool = ['pen'];
 
 tool.onMouseDown = function(event) { //This code in this function is called whenever the mouse is clicked.
     path = new Path();     // Create a new path each time.
@@ -15,6 +16,7 @@ tool.onMouseDown = function(event) { //This code in this function is called when
     strokes.push(path);
     console.log(strokes);
     console.log(event.point); //this commands log to the Console the coordinates of the mouse click. Feel free to delete it! 
+    console.log(prevTool);
 }
 tool.onMouseDrag = function(event) {
     path.add(event.point); //Add points to the path as the user drags their mouse.
@@ -22,20 +24,24 @@ tool.onMouseDrag = function(event) {
 
 $('#pen').on('click', function (e) { //jquery click event code for our "pencil" button.
     currentColor = $('#palette').val();
+    prevTool.unshift('pen');
 })
 
 $('#pencil').on('click', function (e) { //jquery button click code for our "green paint" button.
     console.log("pencil clicked");
     currentColor = $('#palette').val();
+    prevTool.unshift('pencil');
 })
 
 $('#brush').on('click', function (e) { //jquery button click code for our "green paint" button.
     console.log("brush clicked");
     currentColor = $('#palette').val();
+    prevTool.unshift('brush');
 })
 
 $('#eraser').on('click', function (e) { //jquery button click code for our eraser button.
     currentColor = 'white';
+    prevTool.unshift('eraser');
 })
 
 $('#palette').on('input', function (e) {
@@ -68,6 +74,69 @@ thickness.oninput = function() {
     }
   };
 
+// touch gestures
+var canvas = document.getElementById('my-canvas');
+
+// We create a manager object, which is the same as Hammer(), but without the presetted recognizers. 
+var mc = new Hammer.Manager(canvas);
+
+
+// Tap recognizer with minimal 2 taps
+mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+// Single tap recognizer
+mc.add( new Hammer.Tap({ event: 'singletap' }) );
+
+
+// we want to recognize this simulatenous, so a quadrupletap will be detected even while a tap has been recognized.
+mc.get('doubletap').recognizeWith('singletap');
+// we only want to trigger a tap, when we don't have detected a doubletap
+mc.get('singletap').requireFailure('doubletap');
+
+
+mc.on('doubletap', function(ev) {
+    console.log('doubletapped');
+    console.log(strokes);
+    strokes.pop().remove();
+    strokes.pop().remove();
+    strokes.pop().remove();
+    console.log(strokes);
+
+});
+
+mc.on('singletap', function(ev) {
+    console.log(prevTool[1]);
+    document.getElementById(prevTool[1]).click();
+});
+
+
+
+
+
+
+
+// canvas responsiveness
+function resizeCanvas() {
+    var canvas = document.getElementById('my-canvas');
+
+    // const prevWidth = canvas.width;
+    // const prevHeight = canvas.height;
+
+    console.log(canvas.width, canvas.height);
+    console.log(window.innerWidth, window.innerHeight);
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    console.log(canvas.width, canvas.height);
+
+    // resize the drawings
+    for (var i = 0; i < strokes.length; i++) {
+        strokes[i].scale(prevHeight/canvas.height, prevWidth/canvas.width);
+    }
+}
+
+// window.addEventListener('resize', resizeCanvas);
+
 
 
 // saving canvas works
@@ -85,6 +154,7 @@ function clearCanvas() {
     for (var i = 0; i < strokes.length; i++) {
         strokes[i].remove();
     }
+    strokes = [];
     console.log("cleared");
 }
 
