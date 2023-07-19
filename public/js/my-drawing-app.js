@@ -76,56 +76,73 @@ thickness.oninput = function() {
 
 // touch gestures
 var canvas = document.getElementById('my-canvas');
+// var tools = document.getElementsByClassName('tools')[0];
 
 // We create a manager object, which is the same as Hammer(), but without the presetted recognizers. 
 var mc = new Hammer.Manager(canvas);
 
-var singleTap = new Hammer.Tap({ event: 'singletap' });
-var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
-var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3 });
+// var toolsManager = new Hammer.Manager(tools);
 
-mc.add([tripleTap, doubleTap, singleTap]);
+var tap = new Hammer.Tap({ event: 'tap' });
 
-tripleTap.recognizeWith([doubleTap, singleTap]);
-doubleTap.recognizeWith(singleTap);
-
-doubleTap.requireFailure(tripleTap);
-singleTap.requireFailure([tripleTap, doubleTap]);
-
-mc.on('tripletap', function(ev) {
-    console.log('tripletap');
-    var tools = document.getElementsByClassName('tools')[0];
-    var leftBar = document.getElementsByClassName('col-2')[0];
-
-    // console.log(tools);
-
-    if (tools.style.display == 'none') {
-        tools.style.display = '';
-        leftBar.style.display = '';
-    } else {
-        tools.style.display = 'none';
-        leftBar.style.display = 'none';
-    }
-
-
-})
-
-
-mc.on('doubletap', function(ev) {
-    console.log('doubletap');
-    // console.log(strokes);
-    strokes.pop().remove();
-    strokes.pop().remove();
-    strokes.pop().remove();
-    // console.log(strokes);
-
-});
-
-mc.on('singletap', function(ev) {
-    console.log('singletap');
+mc.add(tap);
+mc.on('tap', function(ev) {
+    console.log('tap');
     // console.log(prevTool[1]);
     document.getElementById(prevTool[1]).click();
 });
+
+// var swipe = new Hammer.Swipe();
+
+// var press = new Hammer.Press();
+
+
+// mc.add([singletap, swipe, press]);
+
+// toolsManager.on('swipe', function(ev) {
+//     console.log('swipe');
+// });
+
+// mc.on('press', function(ev) {
+//     console.log('press');
+// });
+
+// tripleTap.recognizeWith([doubleTap, singleTap]);
+// doubleTap.recognizeWith(singleTap);
+
+// doubleTap.requireFailure(tripleTap);
+// singleTap.requireFailure([tripleTap, doubleTap]);
+
+// mc.on('tripletap', function(ev) {
+//     console.log('tripletap');
+//     var tools = document.getElementsByClassName('tools')[0];
+//     var leftBar = document.getElementsByClassName('col-2')[0];
+
+//     // console.log(tools);
+
+//     if (tools.style.display == 'none') {
+//         tools.style.display = '';
+//         leftBar.style.display = '';
+//     } else {
+//         tools.style.display = 'none';
+//         leftBar.style.display = 'none';
+//     }
+
+
+// })
+
+
+// mc.on('doubletap', function(ev) {
+//     console.log('doubletap');
+//     // console.log(strokes);
+//     strokes.pop().remove();
+//     strokes.pop().remove();
+//     strokes.pop().remove();
+//     // console.log(strokes);
+
+// });
+
+
 
 
 
