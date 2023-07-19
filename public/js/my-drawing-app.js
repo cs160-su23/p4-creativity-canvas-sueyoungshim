@@ -14,9 +14,9 @@ tool.onMouseDown = function(event) { //This code in this function is called when
     path.strokeCap = 'round';
     path.strokeJoin = 'round';
     strokes.push(path);
-    console.log(strokes);
-    console.log(event.point); //this commands log to the Console the coordinates of the mouse click. Feel free to delete it! 
-    console.log(prevTool);
+    // console.log(strokes);
+    // console.log(event.point); //this commands log to the Console the coordinates of the mouse click. Feel free to delete it! 
+    // console.log(prevTool);
 }
 tool.onMouseDrag = function(event) {
     path.add(event.point); //Add points to the path as the user drags their mouse.
@@ -80,62 +80,52 @@ var canvas = document.getElementById('my-canvas');
 // We create a manager object, which is the same as Hammer(), but without the presetted recognizers. 
 var mc = new Hammer.Manager(canvas);
 
+var singleTap = new Hammer.Tap({ event: 'singletap' });
+var doubleTap = new Hammer.Tap({event: 'doubletap', taps: 2 });
+var tripleTap = new Hammer.Tap({event: 'tripletap', taps: 3 });
 
-// Tap recognizer with minimal 2 taps
-mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
-// Single tap recognizer
-mc.add( new Hammer.Tap({ event: 'singletap' }) );
+mc.add([tripleTap, doubleTap, singleTap]);
+
+tripleTap.recognizeWith([doubleTap, singleTap]);
+doubleTap.recognizeWith(singleTap);
+
+doubleTap.requireFailure(tripleTap);
+singleTap.requireFailure([tripleTap, doubleTap]);
+
+mc.on('tripletap', function(ev) {
+    console.log('tripletap');
+    var tools = document.getElementsByClassName('tools')[0];
+    var leftBar = document.getElementsByClassName('col-2')[0];
+
+    // console.log(tools);
+
+    if (tools.style.display == 'none') {
+        tools.style.display = '';
+        leftBar.style.display = '';
+    } else {
+        tools.style.display = 'none';
+        leftBar.style.display = 'none';
+    }
 
 
-// we want to recognize this simulatenous, so a quadrupletap will be detected even while a tap has been recognized.
-mc.get('doubletap').recognizeWith('singletap');
-// we only want to trigger a tap, when we don't have detected a doubletap
-mc.get('singletap').requireFailure('doubletap');
+})
 
 
 mc.on('doubletap', function(ev) {
-    console.log('doubletapped');
-    console.log(strokes);
+    console.log('doubletap');
+    // console.log(strokes);
     strokes.pop().remove();
     strokes.pop().remove();
     strokes.pop().remove();
-    console.log(strokes);
+    // console.log(strokes);
 
 });
 
 mc.on('singletap', function(ev) {
-    console.log(prevTool[1]);
+    console.log('singletap');
+    // console.log(prevTool[1]);
     document.getElementById(prevTool[1]).click();
 });
-
-
-
-
-
-
-
-// canvas responsiveness
-function resizeCanvas() {
-    var canvas = document.getElementById('my-canvas');
-
-    // const prevWidth = canvas.width;
-    // const prevHeight = canvas.height;
-
-    console.log(canvas.width, canvas.height);
-    console.log(window.innerWidth, window.innerHeight);
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    console.log(canvas.width, canvas.height);
-
-    // resize the drawings
-    for (var i = 0; i < strokes.length; i++) {
-        strokes[i].scale(prevHeight/canvas.height, prevWidth/canvas.width);
-    }
-}
-
-// window.addEventListener('resize', resizeCanvas);
 
 
 
@@ -148,7 +138,6 @@ createNewButton.addEventListener('click', save);
 
 function clearCanvas() {
     var context = canvas.getContext('2d');
-    rect = [];
     context.clearRect(0, 0, canvas.width, canvas.height);
     console.log(strokes);
     for (var i = 0; i < strokes.length; i++) {
