@@ -29,16 +29,17 @@
   <body>
     <div class="container-fluid fill-height">
       <div class="row" style="height: 100%;">
-        <div class="col-2" style="background-color: rgb(210, 209, 209);">
+        <div class="col-3" style="background-color: rgb(228, 228, 228);">
+          <div class="row" id="logo"> Build-A-Sketch</div>
           <div class="row" style="height: 5%; display: flex; justify-content: center; align-items: center;">
-            <button id="create-new" style="width: auto;"> Create New </button>
+            <button id="create-new" style="width: auto;font-size: large; font-family: Chalkduster, fantasy;"> Create New </button>
           </div>
-          <div class="row" id="past-works" style="height: 95%;"></div>
+          <div class="row" id="past-works" style="height: 85%;"></div>
 
           <!-- put past work stuff here -->
         </div>
-        <div class="col-10" id="canvas" style="background-color: white;">
-          <div class="tools" style="height: 48px;">
+        <div class="col-9" id="canvas" style="background-color: white;">
+          <div class="tools" style="height: auto; position: absolute;">
             <input type="color" id="palette" value="#000000" style="top: 0;">
             <button id="pen">
               <img src="./icons/pen-96.png" />
@@ -54,7 +55,7 @@
             </button>
             <input type="range" id="thickness" min="1" max="80" step="1" value="40" oninput="">
           </div>
-          <canvas id="my-canvas" width="100%"></canvas>
+          <canvas id="my-canvas" width="2000" height="1500"></canvas>
         </div>
       </div>
     </div>

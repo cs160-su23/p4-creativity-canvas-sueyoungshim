@@ -6,6 +6,16 @@ var currentColor = $('#palette').val();
 var strokes = [];
 var prevTool = ['pen'];
 
+// function getArrayLength(arr) {
+//     let count = 0;
+//     console.log('function called');
+//     for (var element of arr) {
+//         console.log(element);
+//         count++;
+//     }
+//     return count;
+//   }
+
 tool.onMouseDown = function(event) { //This code in this function is called whenever the mouse is clicked.
     path = new Path();     // Create a new path each time.
     path.add(event.point);
@@ -13,10 +23,14 @@ tool.onMouseDown = function(event) { //This code in this function is called when
     path.strokeWidth = parseInt($('#thickness').val());
     path.strokeCap = 'round';
     path.strokeJoin = 'round';
-    strokes.push(path);
-    // console.log(strokes);
-    // console.log(event.point); //this commands log to the Console the coordinates of the mouse click. Feel free to delete it! 
-    // console.log(prevTool);
+    try {
+        var seg = path._segments[2];
+        console.log('actual stroke');
+        strokes.push(path);
+      }
+    catch(err) {
+        console.log('just a click');
+      }
 }
 tool.onMouseDrag = function(event) {
     path.add(event.point); //Add points to the path as the user drags their mouse.
@@ -46,6 +60,12 @@ $('#eraser').on('click', function (e) { //jquery button click code for our erase
 
 $('#palette').on('input', function (e) {
     currentColor = $('#palette').val();
+    for(var j = 0; j < document.styleSheets[2].rules.length; j++) {
+        var rule = document.styleSheets[2].rules[j];
+        if(rule.cssText.match("webkit-slider-thumb")) {
+            rule.style.background = $('#palette').val();
+        }
+    }
 })
 
 $('#thickness').on('input', function() {
@@ -68,79 +88,68 @@ thickness.oninput = function() {
     for(var j = 0; j < document.styleSheets[2].rules.length; j++) {
         var rule = document.styleSheets[2].rules[j];
         if(rule.cssText.match("webkit-slider-thumb")) {
-            rule.style.height=thumbSize;
-            rule.style.width=thumbSize;
+            rule.style.height = thumbSize;
+            rule.style.width = thumbSize;
         }
     }
   };
 
 // touch gestures
 var canvas = document.getElementById('my-canvas');
-// var tools = document.getElementsByClassName('tools')[0];
+var tools = document.getElementsByClassName('tools')[0];
 
 // We create a manager object, which is the same as Hammer(), but without the presetted recognizers. 
 var mc = new Hammer.Manager(canvas);
-
-// var toolsManager = new Hammer.Manager(tools);
+var toolsManager = new Hammer.Manager(tools);
 
 var tap = new Hammer.Tap({ event: 'tap' });
-
 mc.add(tap);
 mc.on('tap', function(ev) {
     console.log('tap');
-    // console.log(prevTool[1]);
-    document.getElementById(prevTool[1]).click();
+    strokes.pop().remove();
+    strokes.pop().remove();
+    // document.getElementById(prevTool[1]).click();
 });
 
-// var swipe = new Hammer.Swipe();
+var swipe = new Hammer.Swipe();
+toolsManager.add(swipe);
+toolsManager.on('swipe', function(ev) {
+    console.log('swipe');
+    var tools = $($(".tools")[0]);
+    var animationDuration = 2000; // Duration of the animation in milliseconds
+    console.log($('#canvas').width());
+    console.log(tools.width());
+    var targetPositionX = $('#canvas').width() - tools.width() - 50; // Move to the rightmost position
+    var targetPositionY = $('#canvas').height() - tools.height() - 10; // Move to the bottommost position
 
-// var press = new Hammer.Press();
+    // Animate the div
+    tools.animate(
+    {
+        left: targetPositionX,
+        top: targetPositionY
+    },
+    animationDuration
+    );
+
+});
+
+var press = new Hammer.Press({ time: 1000 });
+mc.add(press);
+mc.on('press', function(ev) {
+    console.log('press');
+    var tools = document.getElementsByClassName('tools')[0];
+    var leftBar = document.getElementsByClassName('col-3')[0];
+
+    if (tools.style.display == 'none') {
+        tools.style.display = '';
+        leftBar.style.display = '';
+    } else {
+        tools.style.display = 'none';
+        leftBar.style.display = 'none';
+    }
+})
 
 
-// mc.add([singletap, swipe, press]);
-
-// toolsManager.on('swipe', function(ev) {
-//     console.log('swipe');
-// });
-
-// mc.on('press', function(ev) {
-//     console.log('press');
-// });
-
-// tripleTap.recognizeWith([doubleTap, singleTap]);
-// doubleTap.recognizeWith(singleTap);
-
-// doubleTap.requireFailure(tripleTap);
-// singleTap.requireFailure([tripleTap, doubleTap]);
-
-// mc.on('tripletap', function(ev) {
-//     console.log('tripletap');
-//     var tools = document.getElementsByClassName('tools')[0];
-//     var leftBar = document.getElementsByClassName('col-2')[0];
-
-//     // console.log(tools);
-
-//     if (tools.style.display == 'none') {
-//         tools.style.display = '';
-//         leftBar.style.display = '';
-//     } else {
-//         tools.style.display = 'none';
-//         leftBar.style.display = 'none';
-//     }
-
-
-// })
-
-
-// mc.on('doubletap', function(ev) {
-//     console.log('doubletap');
-//     // console.log(strokes);
-//     strokes.pop().remove();
-//     strokes.pop().remove();
-//     strokes.pop().remove();
-//     // console.log(strokes);
-
-// });
 
 
 
@@ -171,7 +180,7 @@ function save() {
   
     // Create a container div for the image
     var container = document.createElement('div');
-    container.style = 'padding: 20px; display: inline-block;';
+    container.style = 'padding: 30px; padding-left: 45px; padding-bottom: 0px; display: inline-block;';
   
     // Create an <img> element to display the image
     var img = document.createElement('img');

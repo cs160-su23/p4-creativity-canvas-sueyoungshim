@@ -4,17 +4,34 @@ html, body {
   padding: 0;
 }
 
+#logo {
+  height: 10%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  font-size: xx-large;
+  font-family: Chalkduster, fantasy;
+}
 .fill-height {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
+.tools {
+  height: auto;
+  padding: 15px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #past-works {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
 }
 
 #thickness {
@@ -28,8 +45,8 @@ html, body {
 #thickness::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 10px;
-  height: 10px;
+  width: 40px;
+  height: 40px;
   background: #333;
   border-radius: 50%;
 }
@@ -80,8 +97,14 @@ button {
 }
 
 button:hover {
-  background-color:black;
+  width:58px;
+  height:58px;
   z-index: 2;
+}
+
+button:focus {
+  border: none;
+  outline: none;
 }
 
 img {
